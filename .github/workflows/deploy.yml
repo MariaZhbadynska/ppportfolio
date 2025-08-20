@@ -2,7 +2,7 @@ name: Deploy Vite to GitHub Pages
 
 on:
   push:
-    branches: [ master ] # або main, якщо в тебе main
+    branches: [ master ] 
   workflow_dispatch:
 
 jobs:
@@ -16,10 +16,14 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm ci
-      - run: npm run build
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps --ignore-scripts
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Build project
+        run: npm run build
+
+      - name: Upload dist
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
